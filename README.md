@@ -1,4 +1,4 @@
-# Curriculum vitae
+# Curriculum_Vitae
 
 A new Flutter project created with https://flutlab.io
 
