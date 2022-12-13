@@ -1,361 +1,611 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter UI Controls',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter UI Controls Home Page'),
-    );
-  }
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    initialRoute: '/',
+    routes: {
+      '/': (context) => const HomeRoute(),
+      '/first': (context) => const FirstRoute(),
+      '/second': (context) => const SecondRoute(),
+      '/third': (context) => const ThirdRoute(),
+    },
+  ));
 }
 
-class MyHomePage extends StatefulWidget {
-  final String title;
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String? _dropdownButtonValue = 'One';
-  String? _popupMenuButtonValue = 'One';
-  bool? _checkboxValue = true;
-  String? _radioBoxValue = 'One';
-  double _sliderValue = 10;
-  bool _switchValue = false;
+class HomeRoute extends StatelessWidget {
+  const HomeRoute({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+      backgroundColor: Color.fromARGB(255, 144, 187, 151),
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text("Curriculum Vitae"),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 77, 92, 78),
+        elevation: 0.0,
       ),
-      body: Container(
-        padding: EdgeInsets.only(left: 10, right: 10),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // Buttons
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _GroupText('Buttons'),
-                  ButtonBar(
-                    alignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    buttonMinWidth: 200,
-                    buttonHeight: 30,
-                    buttonAlignedDropdown: true,
-                    layoutBehavior: ButtonBarLayoutBehavior.padded,
-                    buttonPadding: EdgeInsets.symmetric(vertical: 10),
-                    children: <Widget>[
-                      RaisedButton(
-                        onPressed: () => _showToast('Clicked on RaisedButton'),
-                        child: Text('Raised Button'),
-                      ),
-                      FlatButton(
-                        onPressed: () => _showToast('Clicked on FlatButton'),
-                        child: Text('Flat Button'),
-                      ),
-                      OutlineButton(
-                        onPressed: () => _showToast('Clicked on OutlineButton'),
-                        child: Text('OutlineButton'),
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text('IconButton: '),
-                          IconButton(
-                            onPressed: () =>
-                                _showToast('Clicked on IconButton'),
-                            icon: Icon(Icons.build),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text('DropdownButton: '),
-                          DropdownButton(
-                              value: _dropdownButtonValue,
-                              onChanged: (String? value) {
-                                setState(() {
-                                  _dropdownButtonValue = value;
-                                });
-                                _showToast(
-                                    'Changed value of dropdown button to $value'
-                                );
-                              },
-                              items: ['One', 'Two', 'Three', 'Four'].map<
-                                  DropdownMenuItem<String>>((String value) =>
-                                  DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  )
-                              ).toList()
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text('PopupMenuButton: '),
-                          Text(_popupMenuButtonValue!),
-                          PopupMenuButton<String>(
-                              onSelected: (String result) {
-                                setState(() {
-                                  _popupMenuButtonValue = result;
-                                });
-                                _showToast(
-                                    'Selected \'$result\' item on PopupMenuButton');
-                              },
-                              itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry<String>>[
-                                const PopupMenuItem<String>(
-                                  value: 'One',
-                                  child: Text('One'),
-                                ),
-                                const PopupMenuItem<String>(
-                                  value: 'Two',
-                                  child: Text('Two'),
-                                ),
-                                const PopupMenuItem<String>(
-                                  value: 'Three',
-                                  child: Text('Three'),
-                                ),
-                                const PopupMenuItem<String>(
-                                  value: 'Four',
-                                  child: Text('Four'),
-                                ),
-                              ]),
-                        ],
-                      ),
-                    ],
-                  )
-                ],
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Center(
+              child: CircleAvatar(
+                backgroundImage: AssetImage('images/avatar.jpeg'),
+                radius: 50.0,
               ),
-              _SpaceLine(),
-              // Checkbox
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    _GroupText('Checkbox'),
-                    Row(
-                      children: <Widget>[
-                        Text('Simple checkbox'),
-                        Checkbox(value: _checkboxValue,
-                            onChanged: (bool? newValue) {
-                              setState(() {
-                                _checkboxValue = newValue;
-                              });
-                              _showToast(
-                                  'Changed value of checkbox to $_checkboxValue');
-                            }),
-                      ],
-                    )
-                  ]
+            ),
+            Divider(
+              height: 90.0,
+              color: Colors.grey[800],
+            ),
+            Center(
+              child: Text(
+                "CANO, CHRISTINE JANE MACAOAY",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 3.0,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold),
               ),
-              _SpaceLine(),
-              // Radio[Box]
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _GroupText('Radio[Box]'),
-                  RadioListTile(
-                      title: const Text('One'),
-                      value: 'One',
-                      groupValue: _radioBoxValue,
-                      onChanged: (String? value) {
-                        setState(() {
-                          _radioBoxValue = value;
-                        });
-                        _showToast('Changed value of Radio[Box] to $value');
-                      }),
-                  RadioListTile(
-                      title: const Text('Two'),
-                      value: 'Two',
-                      groupValue: _radioBoxValue,
-                      onChanged: (String? value) {
-                        setState(() {
-                          _radioBoxValue = value;
-                        });
-                        _showToast('Changed value of Radio[Box] to $value');
-                      }),
-                  RadioListTile(
-                      title: const Text('Three'),
-                      value: 'Three',
-                      groupValue: _radioBoxValue,
-                      onChanged: (String? value) {
-                        setState(() {
-                          _radioBoxValue = value;
-                        });
-                        _showToast('Changed value of Radio[Box] to $value');
-                      }),
-                  RadioListTile(
-                      title: const Text('Four'),
-                      value: 'Four',
-                      groupValue: _radioBoxValue,
-                      onChanged: (String? value) {
-                        setState(() {
-                          _radioBoxValue = value;
-                        });
-                        _showToast('Changed value of Radio[Box] to $value');
-                      }),
-                ],
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Center(
+              child: Text(
+                "162 Bued, Calasiao, Pangasinan.",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
               ),
-              _SpaceLine(),
-              // Slider
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+            SizedBox(height: 20.0),
+            Center(
+              child: Text(
+                "09159371653",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Center(
+              child: Row(
                 children: <Widget>[
-                  _GroupText('Slider'),
-                  Slider(
-                    value: _sliderValue,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _sliderValue = newValue;
-                      });
-                    },
-                    min: 0,
-                    max: 100,
-                    divisions: 50,
-                    label: _sliderValue.toInt().toString(),
+                  Icon(
+                    Icons.facebook,
+                    color: Colors.blue,
                   ),
-                ],
-              ),
-              _SpaceLine(),
-              // Switch
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _GroupText('Switch'),
-                  Row(
-                    children: <Widget>[
-                      Text('Simple switch'),
-                      Switch(
-                        value: _switchValue,
-                        onChanged: (newValue) {
-                          setState(() {
-                            _switchValue = newValue;
-                          });
-                          _showToast('Changed value of Switch to $newValue');
-                        },
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              _SpaceLine(),
-              // TextField
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _GroupText('TextField'),
-                  TextField(
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'TextField',
+                  SizedBox(height: 10.0),
+                  Text(
+                    'Christine Jane Cano',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15.0,
+                      letterSpacing: 1.0,
                     ),
                   ),
                 ],
               ),
-              _SpaceLine(),
-              // DateTimePicker
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+            Center(
+              child: Row(
                 children: <Widget>[
-                  _GroupText('DateTimePicker'),
-                  OutlinedButton(
-                    onPressed: () {
-                      showDatePicker(context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1970),
-                        lastDate: DateTime.now(),
-                      )
-                      .then((value) {
-                        _showToast('Selected date $value');
-                      });
-                    },
-                    child: Text('Open DatePicker'),
+                  Icon(
+                    Icons.email,
+                    color: Colors.blue,
                   ),
-                  OutlinedButton(
-                    onPressed: () {
-                      showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.now(),
-                      ).then((value) {
-                        _showToast('Selected time $value');
-                      });
-                    },
-                    child: Text('Open TimePicker'),
+                  SizedBox(height: 10.0),
+                  Text(
+                    'christinejanecano@gmail.com',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15.0,
+                      letterSpacing: 1.0,
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 50,)
-            ],
-          ),
+            ),
+            SizedBox(height: 60.0),
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.green[500], // background
+                  onPrimary: Colors.blue[800], // foreground
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+                child: const Icon(Icons.info_sharp),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/first');
+                },
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.green[500], // background
+                  onPrimary: Colors.blue[800], // foreground
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+                child: const Icon(Icons.perm_identity_rounded),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/second');
+                },
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.green[500], // background
+                  onPrimary: Colors.blue[800], // foreground
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+                child: const Icon(Icons.settings),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/third');
+                },
+              ),
+            ),
+          ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _showToast('Clicked on float action button'),
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
-    );
-  }
-
-  void _showToast(String text) {
-    _scaffoldKey.currentState!.showSnackBar(
-        SnackBar(
-          content: Text(text),
-          duration: Duration(seconds: 1),
-        )
     );
   }
 }
 
-class _GroupText extends StatelessWidget {
-  final String text;
-
-  const _GroupText(this.text);
+class FirstRoute extends StatelessWidget {
+  const FirstRoute({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-      child: Text(text,
-        style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w500
-        ),
+    return Scaffold(
+      backgroundColor: Colors.green[200],
+      appBar: AppBar(
+        title: const Text("Personal Information"),
+        backgroundColor: Colors.blue[800],
+      ), // AppBar
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Divider(
+                height: 20.0,
+                color: Colors.black,
+              ),
+              Text(
+                "Name",
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Cano, Christine Jane Macaoay",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Age:",
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "23 years Old",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                "Address:",
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "#162 Bued, Calasiao, Pang.",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                "Height:",
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "160 cm",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                "Weight:",
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "134 lbs",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                "Date of Birth:",
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "OCTOBER 12, 1998",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                "Place of Birth:",
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "DAGUPAN CITY, PANGASINAN",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                "Sex:",
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "FEMALE",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                "Citizenship:",
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "FILIPINO",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                "Civil Status:",
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "SINGLE",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                "Religion:",
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "ROMAN CATHOLIC",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10.0),
+            ]),
       ),
     );
   }
 }
 
-class _SpaceLine extends StatelessWidget {
+class SecondRoute extends StatelessWidget {
+  const SecondRoute({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(height: 5,
-      child: Container(color: Colors.grey,),
+    return Scaffold(
+      backgroundColor: Colors.green[200],
+      appBar: AppBar(
+        title: const Text("Educational Background"),
+        backgroundColor: Colors.blue[800],
+      ), // AppBar
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Divider(
+                height: 20.0,
+                color: Colors.black,
+              ),
+              Text(
+                "Tertiary Education:",
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Philippine College of Science and Technology",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Bachelor of Science in Information Technology",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "- Year 2019-PRESENT",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 30.0,
+              ),
+              Text(
+                "Secondary Education:",
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Bued National High School",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "- Year 2011-2015",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 30.0),
+              Text(
+                "Primary Education:",
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Bued Elementary School",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "- Year 2005-2011",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
+              ),
+            ]),
+      ),
+    );
+  }
+}
+
+class ThirdRoute extends StatelessWidget {
+  const ThirdRoute({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.green[200],
+      appBar: AppBar(
+        title: const Text("Skills"),
+        backgroundColor: Colors.blue[800],
+      ), // AppBar
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Divider(
+                height: 20.0,
+                color: Colors.black,
+              ),
+              Text(
+                "Active listening",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Flexible",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Multi-tasking",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Critical thinking skills",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                "Can work under pressure",
+                style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold),
+              ),
+            ]),
+      ),
     );
   }
 }
